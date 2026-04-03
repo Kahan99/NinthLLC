@@ -1,20 +1,54 @@
 "use client";
 
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import Container from "@/components/layout/Container";
 import Section from "@/components/layout/Section";
-import { Button } from "@/components/ui/button";
 
 const industries = [
-  { name: "E-commerce", image: "/images/Ecom.png" },
-  { name: "Fintech", image: "/images/Fintech.png" },
-  { name: "Real Estate", image: "/images/Real-estate.png" },
-  { name: "Manufacturing", image: "/images/Manufacturing.png" },
-  { name: "Healthcare", image: "/images/Healthcare.png" },
-  { name: "Logistics", image: "/images/Logistics.jpg" },
+  { 
+    name: "E-commerce", 
+    image: "/images/Ecom.png",
+    description: "From DTC storefronts to marketplace platforms, we build buying experiences that convert and scale."
+  },
+  { 
+    name: "Fintech", 
+    image: "/images/Fintech.png",
+    description: "High-precision interfaces and secure workflows for modern financial systems and digital assets."
+  },
+  { 
+    name: "Real Estate", 
+    image: "/images/Real-estate.png",
+    description: "Immersive digital platforms that transform property discovery, management, and transactions."
+  },
+  { 
+    name: "Manufacturing", 
+    image: "/images/Manufacturing.png",
+    description: "Intelligent interfaces for complex supply chains, IoT monitoring, and operational efficiency."
+  },
+  { 
+    name: "Healthcare", 
+    image: "/images/Healthcare.png",
+    description: "HIPAA-compliant platforms designed for patient care, data privacy, and clinical efficiency."
+  },
+  { 
+    name: "Logistics", 
+    image: "/images/Logistics.jpg",
+    description: "Real-time tracking and optimization tools for global moving parts and complex delivery networks."
+  },
 ];
 
 export default function Industries() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const { scrollLeft, clientWidth } = scrollRef.current;
+      const scrollTo = direction === 'left' ? scrollLeft - clientWidth / 2 : scrollLeft + clientWidth / 2;
+      scrollRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' });
+    }
+  };
+
   return (
     <Section id="industries" className="py-12 md:py-20 lg:py-24 bg-black">
       <Container>
@@ -40,8 +74,8 @@ export default function Industries() {
 
       {/* Horizontal Scroll Container */}
       <div
+        ref={scrollRef}
         className="flex gap-5 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-5 lg:px-[max(1.25rem,calc((100vw-80rem)/2))]"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {industries.map((industry, idx) => (
           <motion.div
@@ -50,17 +84,30 @@ export default function Industries() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.05 }}
-            className="relative shrink-0 rounded-2xl overflow-hidden"
+            className="relative shrink-0 rounded-3xl overflow-hidden group"
           >
-            <div className="relative h-full w-full overflow-hidden cursor-pointer group hover:shadow-lg transition-shadow">
-              <img
-                src={industry.image}
-                alt={industry.name}
-                width={400}
-                height={520}
-                loading="lazy"
-                className="h-80 sm:h-[min(43svh,520px)] w-auto object-contain"
-              />
+            <div className="relative h-full w-full overflow-hidden cursor-pointer">
+              {/* Image with Blur Filter */}
+              <div className="h-full w-full transition-all duration-500 group-hover:blur-[10px]">
+                <img
+                  src={industry.image}
+                  alt={industry.name}
+                  width={400}
+                  height={520}
+                  loading="lazy"
+                  className="h-[320px] sm:h-[min(43svh,520px)] w-auto object-contain"
+                />
+              </div>
+
+              {/* Text Overlay - Visible on Hover */}
+              <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-linear-to-t from-black/80 via-black/40 to-transparent text-left">
+                <h3 className="text-white text-2xl lg:text-3xl font-medium mb-2 lg:mb-4">
+                  {industry.name}
+                </h3>
+                <p className="text-white/80 text-sm lg:text-base leading-relaxed max-w-[280px]">
+                  {industry.description}
+                </p>
+              </div>
             </div>
           </motion.div>
         ))}
@@ -73,56 +120,40 @@ export default function Industries() {
             <span className="text-md">Improved outcomes for millions</span>
           </div>
           <div className="flex gap-3">
-            <Button
-              variant="outline"
-              size="icon"
-              disabled
-              aria-label="Scroll left"
+            {/* Scroll Left Button */}
+            <button 
+              onClick={() => scroll('left')}
+              aria-label="Scroll left" 
+              className="flex items-center justify-center p-2.5 
+                cursor-pointer
+                bg-[linear-gradient(137deg,#111214_4.87%,#0c0d0f_75.88%)]
+                border-t border-l border-r border-white/[0.06]
+                rounded-[86px]
+                shadow-[inset_0_1px_0_0_hsla(0,0%,100%,0.1)]
+                transition-all duration-300 ease-in-out
+                text-white hover:text-white/80"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-5 h-5 rotate-180"
-              >
-                <path d="m9 18 6-6-6-6" />
-              </svg>
-            </Button>
-            <Button variant="outline" size="icon" aria-label="Scroll right">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-5 h-5"
-              >
-                <path d="m9 18 6-6-6-6" />
-              </svg>
-            </Button>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right w-5 h-5 rotate-180" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+            </button>
+
+            {/* Scroll Right Button */}
+            <button 
+              onClick={() => scroll('right')}
+              aria-label="Scroll right" 
+              className="flex items-center justify-center p-2.5 
+                cursor-pointer
+                bg-[linear-gradient(137deg,#111214_4.87%,#0c0d0f_75.88%)]
+                border-t border-l border-r border-white/[0.06]
+                rounded-[86px]
+                shadow-[inset_0_1px_0_0_hsla(0,0%,100%,0.1)]
+                transition-all duration-300 ease-in-out
+                text-white hover:text-white/80"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right w-5 h-5" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+            </button>
           </div>
         </div>
       </Container>
-
-      <style>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </Section>
   );
 }

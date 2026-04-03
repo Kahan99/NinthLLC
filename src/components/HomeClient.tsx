@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Hero from "@/components/sections/Hero";
 import Principles from "@/components/sections/Principles";
+import Mission from "@/components/sections/Mission";
 import Capabilities from "@/components/sections/Capabilities";
 import Values from "@/components/sections/Values";
 import Challenge from "@/components/sections/Challenge";
@@ -39,29 +40,20 @@ export default function HomeClient() {
   return (
     <main className="relative flex flex-col min-h-svh bg-black">
 
-      {/* 
-          SECTION 1: STATIC HERO 
-          The Hero section is now a standalone relative section as requested.
-          The background animation is maintained within the Hero component.
-      */}
+      {/* SECTION 1: STATIC HERO */}
       <Hero />
 
       {/*
-        ─────────────────────────────────────────────────────────────────────
-        SECTION 2: UNIFIED MONITOR WINDOW SEQUENCE (REVEAL ONLY)
-        This cinematic reveal now starts immediately after the Hero scrolls away.
-        The monitor asset frames the Principles section intro as the user zooms in/out.
-        ─────────────────────────────────────────────────────────────────────
+        SECTION 2: UNIFIED MONITOR WINDOW SEQUENCE
+        Cinematic reveal framing the Mission narrative.
       */}
       <div ref={containerRef} className="relative h-[300vh] z-10">
         <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-
           {/* THE MONITOR ASSET LAYER */}
           <motion.div
             className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
             style={{ opacity: bgOpacity }}
           >
-            {/* Underlay glow from monitor-bg.png */}
             <img 
               src="/monitor-bg.png" 
               alt="" 
@@ -82,16 +74,15 @@ export default function HomeClient() {
               className="absolute inset-0 w-full h-full hidden md:block object-cover" 
               loading="eager"
             />
-            
-            {/* Final high-fidelity polish glow */}
             <div className="absolute inset-0 bg-radial-to-t from-white/10 to-transparent blur-3xl opacity-30" />
           </motion.div>
 
-          {/* THE CONTENT WINDOW: Principles only reveal */}
+          {/* THE CONTENT WINDOW: Reveal Sequence */}
           <motion.div
             className="relative w-full h-full flex flex-col origin-center z-[1]"
             style={{ scale: windowScale }}
           >
+            {/* Principles serves as the visual/grid underlay */}
             <Principles scrollProgress={smoothProgress} />
           </motion.div>
 
@@ -101,22 +92,24 @@ export default function HomeClient() {
             <div className="absolute inset-x-0 bottom-0 h-60 bg-gradient-to-t from-black via-black/40 to-transparent z-10" />
           </div>
         </div>
+
+        {/* 
+            INTEGRATED MISSION TEXT 
+            Appears as part of the reveal sequence scroll 
+        */}
+        <div className="relative z-20 px-6 -mt-[50vh] pb-[20vh]">
+          <Mission />
+        </div>
       </div>
 
-      {/*
-        ─────────────────────────────────────────────────────────────────────
-        STATIC SECTIONS — ordered to match ninth.llc scroll flow exactly
-        ─────────────────────────────────────────────────────────────────────
-      */}
-
-      {/* SECTION 4: Capabilities — "Software is the foundation." */}
+      {/* SECTION 4: Capabilities */}
       <Capabilities />
 
-      {/* SECTION 5: Values / The NINTH° Standard — Four pillars */}
-      <Values />
-
-      {/* SECTION 6: Challenge — Animated quote block */}
+      {/* SECTION 5: Challenge — Reordered to match reference */}
       <Challenge />
+
+      {/* SECTION 6: Values / The NINTH° Standard */}
+      <Values />
 
       {/* SECTION 7: Method — Process timeline */}
       <Method />

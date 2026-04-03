@@ -300,7 +300,7 @@ export default function Contact() {
     }),
   };
 
-  const transition = { duration: 0.35, ease: [0.4, 0, 0.2, 1] };
+  const transition = { duration: 0.35, ease: [0.4, 0, 0.2, 1] as any };
 
   // ── STEP 0: Intro card ──────────────────────────────────────────────────
   const renderIntro = () => (

@@ -36,7 +36,7 @@ export default function Values() {
   const [activePillar, setActivePillar] = React.useState(0);
 
   return (
-    <Section className="bg-black py-12 md:py-20 lg:py-24">
+    <Section id="value" className="bg-black py-12 md:py-20 lg:py-24">
       <Container>
         <div className="mb-6 lg:mb-10">
           <div className="flex items-center gap-2 mb-4">

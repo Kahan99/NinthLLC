@@ -27,26 +27,63 @@ export function ShaderAnimation() {
 
     // Fragment shader
     const fragmentShader = `
-      #define TWO_PI 6.2831853072
-      #define PI 3.14159265359
-
       precision highp float;
       uniform vec2 resolution;
       uniform float time;
 
-      void main(void) {
-        vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
-        float t = time*0.05;
-        float lineWidth = 0.002;
+      float hash(float n) {
+        return fract(sin(n) * 43758.5453123);
+      }
 
-        vec3 color = vec3(0.0);
-        for(int j = 0; j < 3; j++){
-          for(int i=0; i < 5; i++){
-            color[j] += lineWidth*float(i*i) / abs(fract(t - 0.01*float(j)+float(i)*0.01)*5.0 - length(uv) + mod(uv.x+uv.y, 0.2));
-          }
-        }
+      float get_bar(vec2 uv, float t, float offset) {
+        float x = uv.x + offset;
+        float col_id = floor(x * 120.0);
+        float col_fract = fract(x * 120.0);
         
-        gl_FragColor = vec4(color[0],color[1],color[2],1.0);
+        float h = hash(col_id);
+        float speed = (h - 0.5) * 1.5;
+        float phase = hash(col_id + 7.23) * 6.28;
+        
+        // Vertical windowing
+        float y_center = 0.5 + (hash(col_id + 13.41) - 0.5) * 0.2;
+        float y_spread = 0.2 + hash(col_id + 21.09) * 0.4;
+        float y_grad = smoothstep(y_center - y_spread, y_center, uv.y) * smoothstep(y_center + y_spread, y_center, uv.y);
+        
+        // Horizontal bar shape
+        float bar_width = 0.05 + hash(col_id + 3.1) * 0.45;
+        float bar = smoothstep(0.5 - bar_width, 0.5, col_fract) * smoothstep(0.5 + bar_width, 0.5, col_fract);
+        
+        // Animation
+        float pulse = sin(t * speed + phase) * 0.5 + 0.5;
+        pulse = pow(pulse, 3.0); // Sharpen the pulses
+        
+        return bar * pulse * y_grad;
+      }
+
+      void main(void) {
+        vec2 uv = gl_FragCoord.xy / resolution.xy;
+        float t = time * 0.2;
+        
+        // Chromatic aberration shift values
+        float shift = 0.0025;
+        
+        vec3 col;
+        col.r = get_bar(uv, t, -shift);
+        col.g = get_bar(uv, t, 0.0);
+        col.b = get_bar(uv, t, shift);
+        
+        // Add subtle horizontal "glitch" lines
+        float glitch = step(0.995, hash(uv.y + t * 5.0)) * hash(t) * 0.2;
+        col += glitch;
+        
+        // Darken the overall result for better text legibility
+        col *= 0.7;
+        
+        // Add scanline texture
+        float scanline = sin(uv.y * 1200.0) * 0.04;
+        col -= scanline;
+        
+        gl_FragColor = vec4(col, 1.0);
       }
     `
 

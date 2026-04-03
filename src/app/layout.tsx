@@ -18,8 +18,27 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   title: "NINTH° | Design & Development Studio",
-  description: "NINTH° builds software products and digital systems end to end, from first principles to production.",
-  keywords: ["Design", "Development", "Studio", "Software", "Digital Systems"],
+  description: "NINTH° builds high-performance digital products. AI-native software engineering, product design, and strategic consulting for ambitious teams.",
+  keywords: ["Software Engineering", "Product Design", "AI-native", "Strategic Consulting", "Design", "Development", "Studio", "Software", "Digital Systems"],
+  openGraph: {
+    title: "NINTH° | Design & Development Studio",
+    description: "High-performance digital products. AI-native software engineering, product design, and strategic consulting for ambitious teams.",
+    url: "https://ninth.llc",
+    siteName: "NINTH°",
+    locale: "en_US",
+    type: "website",
+    images: [{ url: "/opengraph-image.jpg", width: 1200, height: 630, alt: "NINTH° | Design & Development Studio" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NINTH° | Design & Development Studio",
+    description: "High-performance digital products. AI-native software engineering, product design, and strategic consulting for ambitious teams.",
+    images: ["/opengraph-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

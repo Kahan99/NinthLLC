@@ -1,7 +1,96 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+
+const cards = [
+  {
+    id: "discovery",
+    title: "Discovery",
+    desc: "Define outcomes, constraints, and success metrics",
+    duration: "1-2 weeks",
+    startWeek: 1,
+    colSpan: 2.2,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="9" stroke="#FFA16C" strokeWidth="2"/>
+        <path d="M12 7V12L15 15" stroke="#FFA16C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    )
+  },
+  {
+    id: "blueprint",
+    title: "Blueprint",
+    desc: "Architecture, scope boundaries, and execution plan",
+    duration: "1-2 weeks",
+    startWeek: 3.2,
+    colSpan: 2.2,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="15" width="13" height="6" rx="1.5" fill="#FFA16C" fillOpacity="0.2" stroke="#FFA16C" strokeWidth="2"/>
+        <rect x="6" y="9" width="13" height="6" rx="1.5" fill="#FFA16C" fillOpacity="0.4" stroke="#FFA16C" strokeWidth="2"/>
+        <rect x="9" y="3" width="13" height="6" rx="1.5" fill="#FFA16C" fillOpacity="1" stroke="#FFA16C" strokeWidth="2"/>
+      </svg>
+    )
+  },
+  {
+    id: "design",
+    title: "Design",
+    desc: "User journeys, UI system, prototypes",
+    duration: "2-3 weeks",
+    startWeek: 5.5,
+    colSpan: 3.5,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 19L19 12L22 15L15 22L12 19Z" fill="#FFA16C"/>
+        <path d="M18 13L16.5 5.5L2 2L5.5 16.5L13 18L18 13Z" stroke="#FFA16C" strokeWidth="2" strokeLinejoin="round"/>
+        <circle cx="8" cy="8" r="1.5" fill="#FFA16C"/>
+      </svg>
+    )
+  },
+  {
+    id: "build",
+    title: "Build",
+    desc: "Sprint based delivery with clear milestones",
+    duration: "2-3 weeks",
+    startWeek: 8.5,
+    colSpan: 3.5,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23.5 6.5L17.5 0.5L16.5 1.5L22.5 7.5L16.5 13.5L17.5 14.5L23.5 8.5V6.5Z" fill="#FFA16C"/>
+        <path d="M0.5 8.5L6.5 14.5L7.5 13.5L1.5 7.5L7.5 1.5L6.5 0.5L0.5 6.5V8.5Z" fill="#FFA16C"/>
+        <path d="M14.5 0.5L9.5 14.5H10.5L15.5 0.5H14.5Z" fill="#FFA16C"/>
+      </svg>
+    )
+  },
+  {
+    id: "hardening",
+    title: "Hardening",
+    desc: "QA, performance, reliability, release readiness",
+    duration: "1-2 weeks",
+    startWeek: 11.5,
+    colSpan: 2.5,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" fill="#FFA16C"/>
+      </svg>
+    )
+  },
+  {
+    id: "launch",
+    title: "Launch",
+    desc: "Deployment, monitoring, and ongoing improvement",
+    duration: "1-2 weeks",
+    startWeek: 13.5,
+    colSpan: 2.5,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" fill="#FFA16C"/>
+        <path d="M12 15L9 12A22 22 0 0 1 11 8.05A12.88 12.88 0 0 1 22 2C22 4.72 21.22 9.5 16 13A22.35 22.35 0 0 1 12 15Z" fill="#FFA16C"/>
+      </svg>
+    )
+  },
+];
 
 export default function Method() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -11,227 +100,152 @@ export default function Method() {
     offset: ["start start", "end end"]
   });
 
-  // Card 1 Animations
-  const card1Opacity = useTransform(scrollYProgress, [0, 0.15, 0.3, 0.4], [0, 1, 1, 0.4]);
-  const card1Blur = useTransform(scrollYProgress, [0, 0.15, 0.3, 0.4], ["blur(10px)", "blur(0px)", "blur(0px)", "blur(3px)"]);
-  const card1X = useTransform(scrollYProgress, [0, 0.15], [-40, 0]);
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
-  // Card 2 Animations
-  const card2Opacity = useTransform(scrollYProgress, [0.25, 0.4, 0.55, 0.65], [0, 1, 1, 0.4]);
-  const card2Blur = useTransform(scrollYProgress, [0.25, 0.4, 0.55, 0.65], ["blur(10px)", "blur(0px)", "blur(0px)", "blur(3px)"]);
-  const card2X = useTransform(scrollYProgress, [0.25, 0.4], [-40, 0]);
-
-  // Card 3 Animations
-  const card3Opacity = useTransform(scrollYProgress, [0.5, 0.65, 1], [0, 1, 1]);
-  const card3Blur = useTransform(scrollYProgress, [0.5, 0.65, 1], ["blur(10px)", "blur(0px)", "blur(0px)"]);
-  const card3X = useTransform(scrollYProgress, [0.5, 0.65], [-40, 0]);
+  // Vertical Input Inversion (Orange Particles flow into the node center)
+  const verticalInputOpacity = useTransform(smoothProgress, [0, 0.15, 0.25], [1, 1, 0]);
+  const timelineX = useTransform(smoothProgress, [0.15, 1], ["0%", "-68%"]);
 
   return (
-    <section ref={containerRef} id="method" className="relative w-full xl:h-[300vh]">
-      <div className="xl:sticky xl:top-0 xl:h-screen w-full flex flex-col items-center justify-center p-4 container mx-auto mt-24 xl:mt-0 xl:pt-16">
-        <div className="flex flex-col gap-4 mb-6 lg:mb-10 w-full max-w-7xl px-5 lg:px-0">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-white" style={{ boxShadow: "0 0 20px #fff" }}></div>
-            <span className="text-xs uppercase tracking-widest text-[#707079] font-medium">Process</span>
+    <section ref={containerRef} id="timeline" className="relative w-full h-[600vh] bg-black">
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center overflow-hidden">
+        
+        {/* ── HEADER ── */}
+        <div className="w-full max-w-[1440px] pt-12 md:pt-24 px-[5%] z-50 pointer-events-none self-start">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-[6px] h-[6px] rounded-full bg-white shadow-[0_0_10px_#fff]" />
+            <span className="text-[10px] uppercase tracking-[0.4em] text-[#707079] font-semibold">PROCESS</span>
           </div>
-          <div className="flex flex-col gap-2">
-            <h2 className="text-[28px] md:text-[40px] font-medium leading-[1.3] tracking-[-0.2px] text-white fog-effect">
-              <span className="whitespace-pre-wrap text-[#FFA16C] fog-effect" aria-label="A composed process," style={{ opacity: 1 }}>
-                <span className="sr-only">A composed process,</span>
-                {["A", " ", "composed", " ", "process,"].map((word, i) => (
-                  <motion.span 
-                    key={i} 
-                    initial={{ opacity: 0, filter: "blur(10px)" }} 
-                    whileInView={{ opacity: 1, filter: "blur(0px)" }} 
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.8, delay: i * 0.08 }}
-                    className="inline-block whitespace-pre"
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </span>
-              {" "}
-              <span className="whitespace-pre-wrap" aria-label="even when the work is complex." style={{ opacity: 1 }}>
-                <span className="sr-only">even when the work is complex.</span>
-                {["even", " ", "when", " ", "the", " ", "work", " ", "is", " ", "complex."].map((word, i) => (
-                  <motion.span 
-                    key={i + 5} 
-                    initial={{ opacity: 0, filter: "blur(10px)" }} 
-                    whileInView={{ opacity: 1, filter: "blur(0px)" }} 
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.8, delay: (i + 5) * 0.08 }}
-                    className="inline-block whitespace-pre"
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </span>
-            </h2>
-            <p className="text-base font-light leading-[150%] tracking-[0.4px] text-[#707079]">
-              No noise. No chaos. Just precision.
-            </p>
-          </div>
+          <h2 className="text-[32px] md:text-[48px] font-medium leading-[1.1] tracking-[-0.03em] text-white fog-effect max-w-4xl">
+            <span className="text-[#FFA16C]">A composed process,</span>{" "}
+            <span className="opacity-90">even when the work is complex.</span>
+          </h2>
+          <p className="text-[15px] font-light leading-[150%] tracking-[0.02em] text-[#707079] mt-6 opacity-60">
+            No noise. No chaos. Just precision.
+          </p>
         </div>
 
-        <div className="w-full max-w-7xl rounded-2xl border bg-[#0e0e0e] border-[#252525] p-2 sm:p-8 xl:p-16 flex items-center justify-center min-h-[500px]">
-          {/* Timeline container for Desktop (Scroll Hijacked) */}
-          <div className="w-full h-full relative font-['Neue_Montreal',sans-serif] hidden xl:block">
+        {/* ── INTRO INPUT ── */}
+        <div className="absolute inset-x-0 h-1/2 top-0 pointer-events-none z-10">
+          <motion.div 
+            style={{ opacity: verticalInputOpacity }}
+            className="absolute left-[12%] top-0 h-full w-[1px] overflow-hidden"
+          >
+            <div className="h-full w-full bg-gradient-to-b from-white/0 via-[#FFA16C]/30 to-[#FFA16C]" />
+          </motion.div>
+        </div>
+
+        {/* ── TIMELINE TRACK AREA ── */}
+        <div className="w-full max-w-[1440px] px-[5%] h-[55%] mt-12 md:mt-16">
+          <div className="w-full h-full border border-white/5 bg-[#0A0A0B]/50 rounded-[32px] overflow-hidden relative backdrop-blur-sm">
             
-            {/* BG Grid Lines for 6 weeks */}
-            <div className="absolute inset-0 flex justify-between pointer-events-none">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="flex flex-col items-center flex-1 border-r border-[#252525]/50 first:border-l relative">
-                  <span className="absolute top-0 text-[11px] text-[#707079] tracking-widest mt-2">{`Week ${i}`}</span>
-                </div>
-              ))}
-            </div>
+            {/* Ambient track glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,161,108,0.02)_0%,transparent_50%)]" />
 
-            <div className="relative w-full h-[400px] mt-20">
-              {/* Card 1: Discovery */}
-              <motion.div 
-                style={{ opacity: card1Opacity, filter: card1Blur, x: card1X }}
-                className="absolute top-0 left-[2%] w-[29%] z-30"
-              >
-                <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/15 to-transparent">
-                  <div className="bg-[#18181A]/95 backdrop-blur-xl border border-white/5 p-4 md:p-6 rounded-xl flex flex-col gap-3 shadow-2xl">
-                    <div className="flex justify-between items-start">
-                      <div className="text-[#FFA16C]">
-                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                           <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-                           <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
-                         </svg>
-                      </div>
-                      <span className="text-[10px] uppercase tracking-wider text-[#707079] font-medium mt-1">1-2 weeks</span>
-                    </div>
-                    <h3 className="text-white font-medium text-[15px] mt-1">Discovery</h3>
-                    <p className="text-[#707079] text-xs font-light leading-relaxed">Define outcomes, constraints, and success metrics</p>
+            <motion.div 
+              style={{ x: timelineX }}
+              className="flex h-full min-w-[320vw] relative"
+            >
+              {/* Grid Columns */}
+              <div className="absolute inset-0 flex">
+                {[...Array(14)].map((_, i) => (
+                  <div key={i} className="flex-1 border-r border-white/5 relative h-full">
+                    <span className="absolute top-10 left-10 text-[12px] text-white/30 font-medium tracking-tight whitespace-nowrap">
+                      {`Week ${i + 1}`}
+                    </span>
                   </div>
-                </div>
-              </motion.div>
+                ))}
+              </div>
 
-              {/* Card 2: Blueprint */}
-              <motion.div 
-                style={{ opacity: card2Opacity, filter: card2Blur, x: card2X }}
-                className="absolute top-[35%] left-[30%] w-[33%] z-20"
-              >
-                <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/10 to-transparent">
-                   <div className="bg-[#18181A]/95 backdrop-blur-xl border border-white/5 p-4 md:p-6 rounded-xl flex flex-col gap-3 shadow-2xl">
-                    <div className="flex justify-between items-start">
-                      <div className="text-[#FFA16C]">
-                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                           <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                           <line x1="3" y1="9" x2="21" y2="9"></line>
-                           <line x1="9" y1="21" x2="9" y2="9"></line>
-                         </svg>
-                      </div>
-                      <span className="text-[10px] uppercase tracking-wider text-[#707079] font-medium mt-1">1-2 weeks</span>
-                    </div>
-                    <h3 className="text-white font-medium text-[15px] mt-1">Blueprint</h3>
-                    <p className="text-[#707079] text-xs font-light leading-relaxed">Architecture, scope boundaries, and execution plan</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Card 3: Design */}
-              <motion.div 
-                style={{ opacity: card3Opacity, filter: card3Blur, x: card3X }}
-                className="absolute top-[68%] left-[55%] w-[42%] z-10"
-              >
-                 <div className="p-[1px] rounded-xl bg-gradient-to-br from-white/10 to-transparent">
-                   <div className="bg-[#18181A]/95 backdrop-blur-xl border border-white/5 p-4 md:p-6 rounded-xl flex flex-col gap-3 shadow-2xl">
-                    <div className="flex justify-between items-start">
-                      <div className="text-[#FFA16C]">
-                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                           <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-                           <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-                           <circle cx="6" cy="6" r="3"></circle>
-                         </svg>
-                      </div>
-                      <span className="text-[10px] uppercase tracking-wider text-[#707079] font-medium mt-1">3 weeks</span>
-                    </div>
-                    <h3 className="text-white font-medium text-[15px] mt-1">Design</h3>
-                    <p className="text-[#707079] text-xs font-light leading-relaxed">User journeys, UI system, prototypes</p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+              {/* Cards Container */}
+              <div className="relative w-full h-full pt-32 pb-12">
+                {cards.map((card, index) => (
+                  <PhaseCard 
+                    key={card.id} 
+                    card={card} 
+                    index={index} 
+                    scrollYProgress={smoothProgress} 
+                  />
+                ))}
+              </div>
+            </motion.div>
           </div>
-
-          {/* Mobile View (Stack - Non-Hijacked) */}
-          <div className="w-full flex xl:hidden flex-col gap-6 font-['Neue_Montreal',sans-serif] p-4 mt-4">
-             {/* Card 1 */}
-             <motion.div 
-               initial={{ opacity: 0, y: 20 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true }}
-               className="p-[1px] rounded-xl bg-gradient-to-br from-white/15 to-transparent"
-             >
-                <div className="bg-[#18181A]/95 backdrop-blur-xl border border-white/5 p-5 rounded-xl flex flex-col gap-3 shadow-2xl">
-                  <div className="flex justify-between items-start">
-                    <div className="text-[#FFA16C]">
-                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                         <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-                         <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
-                       </svg>
-                    </div>
-                    <span className="text-[10px] uppercase tracking-wider text-[#707079] font-medium mt-1">Week 1 (1-2 weeks)</span>
-                  </div>
-                  <h3 className="text-white font-medium text-[16px] mt-1">Discovery</h3>
-                  <p className="text-[#707079] text-[13px] font-light leading-relaxed">Define outcomes, constraints, and success metrics</p>
-                </div>
-             </motion.div>
-
-             {/* Card 2 */}
-             <motion.div 
-               initial={{ opacity: 0, y: 20 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true }}
-               className="p-[1px] rounded-xl bg-gradient-to-br from-white/10 to-transparent"
-             >
-                <div className="bg-[#18181A]/95 backdrop-blur-xl border border-white/5 p-5 rounded-xl flex flex-col gap-3 shadow-2xl">
-                  <div className="flex justify-between items-start">
-                    <div className="text-[#FFA16C]">
-                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                         <line x1="3" y1="9" x2="21" y2="9"></line>
-                         <line x1="9" y1="21" x2="9" y2="9"></line>
-                       </svg>
-                    </div>
-                    <span className="text-[10px] uppercase tracking-wider text-[#707079] font-medium mt-1">Week 2-3 (1-2 weeks)</span>
-                  </div>
-                  <h3 className="text-white font-medium text-[16px] mt-1">Blueprint</h3>
-                  <p className="text-[#707079] text-[13px] font-light leading-relaxed">Architecture, scope boundaries, and execution plan</p>
-                </div>
-             </motion.div>
-
-             {/* Card 3 */}
-             <motion.div 
-               initial={{ opacity: 0, y: 20 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true }}
-               className="p-[1px] rounded-xl bg-gradient-to-br from-white/10 to-transparent"
-             >
-                <div className="bg-[#18181A]/95 backdrop-blur-xl border border-white/5 p-5 rounded-xl flex flex-col gap-3 shadow-2xl">
-                  <div className="flex justify-between items-start">
-                    <div className="text-[#FFA16C]">
-                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                         <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-                         <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-                         <circle cx="6" cy="6" r="3"></circle>
-                       </svg>
-                    </div>
-                    <span className="text-[10px] uppercase tracking-wider text-[#707079] font-medium mt-1">Week 4-6 (3 weeks)</span>
-                  </div>
-                  <h3 className="text-white font-medium text-[16px] mt-1">Design</h3>
-                  <p className="text-[#707079] text-[13px] font-light leading-relaxed">User journeys, UI system, prototypes</p>
-                </div>
-             </motion.div>
-          </div>
-
         </div>
+
       </div>
     </section>
   );
 }
 
+function PhaseCard({ card, index, scrollYProgress }: { card: any, index: number, scrollYProgress: any }) {
+  // Stagger reveal relative to horizontal entry
+  const start = 0.15 + (index * 0.1);
+  const end = start + 0.12;
+  
+  const y = useTransform(scrollYProgress, [start, end], [120, 0]);
+  const opacity = useTransform(scrollYProgress, [start, end], [0, 1]);
+  const scale = useTransform(scrollYProgress, [start, end], [0.97, 1]);
+
+  // Card spans a variable width based on weeks
+  const weekWidth = 100 / 14; 
+  const cardWidth = `${card.colSpan * weekWidth}%`;
+  const leftPos = `${(card.startWeek - 1) * weekWidth}%`;
+  
+  // Explicit vertical positions for the "staircase" reveal
+  const verticalOffsets = [
+    "8%",   // Discovery
+    "40%",  // Blueprint
+    "72%",  // Design (lower)
+    "8%",   // Build (new row start)
+    "40%",  // Hardening
+    "72%"   // Launch
+  ];
+
+  return (
+    <motion.div 
+      style={{ 
+        left: leftPos, 
+        width: cardWidth,
+        top: verticalOffsets[index],
+        y, 
+        opacity,
+        scale
+      }}
+      className="absolute min-w-[320px] max-w-[480px] z-20 group"
+    >
+      <div className="p-[1px] rounded-[24px] bg-gradient-to-br from-white/10 via-white/5 to-transparent shadow-2xl">
+        <div className="bg-[#0A0A0B]/80 backdrop-blur-[20px] border border-white/5 p-8 rounded-[23px] flex flex-col relative overflow-hidden transition-all duration-700 group-hover:bg-[#121214]/90 group-hover:border-white/10">
+          
+          {/* Subtle Diagonal Highlight */}
+          <div className="absolute top-[-50%] left-[-20%] w-[100%] h-[200%] bg-gradient-to-br from-white/[0.03] via-transparent to-transparent rotate-[25deg] pointer-events-none" />
+
+          {/* Top Row: Icon Box & Duration Label */}
+          <div className="flex justify-between items-start mb-8 relative z-10">
+            <div className="bg-[#1C1C1F]/60 p-3 rounded-[16px] border border-white/5 shadow-inner backdrop-blur-md">
+              <div className="w-5.5 h-5.5 flex items-center justify-center opacity-90">
+                {card.icon}
+              </div>
+            </div>
+            <span className="text-[10.5px] font-medium text-[#707079]/70 tracking-tight mt-2 px-3 py-1 rounded-full border border-white/5 bg-white/[0.01]">
+              {card.duration}
+            </span>
+          </div>
+
+          {/* Middle: Title */}
+          <h3 className="text-white text-[20px] font-medium tracking-[-0.01em] leading-none mb-3.5 relative z-10">
+            {card.title}
+          </h3>
+
+          {/* Bottom: Description */}
+          <p className="text-[#707079] text-[14px] font-light leading-[1.6] max-w-[90%] relative z-10 opacity-80">
+            {card.desc}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
