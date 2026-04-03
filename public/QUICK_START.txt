@@ -1,0 +1,34 @@
+QUICK START - SINGLE IMAGE FOLDER
+=================================
+
+Upload all images and videos to:
+  d:\NinthLLc\public\images\
+
+Required files (one folder only):
+  Vaishali-Shah.webp
+  Kamal-Shah.webp
+  Rajiv-Shah.webp
+  thirty.webp
+  Ecom.png
+  Fintech.png
+  Real-estate.png
+  Manufacturing.png
+  Healthcare.png
+  Logistics.jpg
+  macbook.jpg
+  1.jpg
+  openai.svg
+  claude.svg
+  gemini.svg
+  perplexity.svg
+  midjourney.svg
+  surface-bottom_4x.webp
+  new.webm
+  positioning.svg
+
+After upload:
+  1. Refresh browser
+  2. Open DevTools (F12)
+  3. Check Network tab for 404 errors
+
+See IMAGE_UPLOAD_GUIDE.md for full details.

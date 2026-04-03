@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
-import { Instrument_Sans } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import GlobalFilters from "@/components/layout/GlobalFilters";
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
   variable: "--font-instrument-sans",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: "italic",
+  variable: "--font-instrument-serif",
 });
 
 export const metadata: Metadata = {
@@ -19,8 +28,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${instrumentSans.variable} font-sans h-full dark`}>
+    <html lang="en" className={`${instrumentSans.variable} ${instrumentSerif.variable} font-sans h-full dark`}>
       <body className="min-h-full flex flex-col bg-background text-foreground antialiased">
+        <GlobalFilters />
+        <Navbar />
         {children}
       </body>
     </html>

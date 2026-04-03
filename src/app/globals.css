@@ -1,45 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --color-background: #111111;
-  --color-foreground: #FFFFFF;
-  
-  --font-sans: "Instrument Sans", "Inter", sans-serif;
-  
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+
+  --font-sans: "Inter", "Geist", sans-serif;
+  --font-serif: "Instrument Serif", "Georgia", serif;
+
   --radius-lg: 12px;
   --radius-md: 8px;
   --radius-sm: 4px;
 
   /* Custom Ninth Colors */
-  --color-surface: #1A1A1A;
+  --color-surface: #0a0a0a;
   --color-border: rgba(255, 255, 255, 0.1);
   --color-glow: rgba(255, 255, 255, 0.05);
+  --color-accent: #FFA16C;
 }
 
 :root {
-  --background: #111111;
-  --foreground: #FFFFFF;
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  background: #000;
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-/* Glassmorphism Utility */
+/* ── PAGE BACKGROUND ── */
+.page-bg {
+  background: #000;
+  position: relative;
+}
+
+/* Subtle grain effect used on hero section */
+.hero-noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 160px;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+}
+
+/* ── GLASSMORPHISM ── */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.03)
+  );
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4),
+    0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
-.glass-dark {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.glass-pill {
+  -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: radial-gradient(circle farthest-side at 50% 0, rgba(242,242,242,0.12), transparent);
+  outline: 1px solid rgba(242,242,242,0.12);
+  outline-offset: -1px;
 }
+
+/* ── TEXT FOG REVEAL EFFECT ── */
+.fog-effect {
+  text-shadow: 0 0 80px rgba(255, 255, 255, 0.1);
+}
+
+/* ── KEYFRAMES ── */
+@keyframes progressFill {
+  from { transform: scaleY(0); transform-origin: top; }
+  to   { transform: scaleY(1); transform-origin: top; }
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SELECTION ── */
+::selection {
+  background: rgba(255, 161, 108, 0.25);
+  color: #fff;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
