@@ -48,24 +48,29 @@ export default function Values() {
     <Section id="value" className="bg-black py-12 md:py-20 lg:py-24">
       <Container>
         <div className="mb-6 lg:mb-10">
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-4 px-2">
             <div
-              className="w-2 h-2 rounded-full bg-white"
-              style={{ boxShadow: "0 0 20px #fff" }}
+              className="w-2 h-2 rounded-full bg-white animate-pulse"
+              style={{ boxShadow: "0 0 15px 2px rgba(255, 255, 255, 0.8)" }}
             />
-            <h2 className="text-xs uppercase tracking-widest text-[#707079] font-medium">
+            <h2 className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[#707079] font-semibold">
               Our core pillars
             </h2>
           </div>
-          <h3 className="text-[28px] md:text-[40px] font-medium leading-[1.3] tracking-[-0.2px] text-white">
-            <span className="block mb-2">The NINTH° Standard:</span>
-            <span className="text-[#FFA16C]">Uncompromising Excellence</span>
+          <h3 className="text-[32px] sm:text-[40px] md:text-[48px] font-medium leading-[1.1] tracking-[-0.03em] text-white px-2">
+            <span className="block mb-1">The NINTH° Standard:</span>
+            <span 
+              className="text-[#FFA16C] block"
+              style={{ textShadow: "0 0 40px rgba(255, 161, 108, 0.4)" }}
+            >
+              Uncompromising Excellence
+            </span>
           </h3>
         </div>
 
         <div className="flex flex-col lg:flex-row lg:items-stretch lg:gap-12">
-          {/* Left Pillar Cards (Desktop: 1/2 width) */}
-          <div className="flex flex-col gap-3 lg:w-1/2 lg:justify-between">
+          {/* Left Pillar Cards */}
+          <div className="flex flex-col gap-4 lg:w-1/2 lg:justify-between px-2">
             {pillars.map((pillar, idx) => (
               <motion.div
                 key={idx}
@@ -75,70 +80,56 @@ export default function Values() {
                 transition={{ delay: idx * 0.1 }}
                 onMouseEnter={() => setActivePillar(idx)}
                 onClick={() => setActivePillar(idx)}
-                className={`group flex items-center gap-5 p-5 rounded-xl border transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
+                className={`group flex items-center gap-5 p-6 rounded-2xl border transition-all duration-500 cursor-pointer ${
                   activePillar === idx
-                    ? "bg-[#FFA16C]/10 border-[#FFA16C]/20"
-                    : "bg-white/2 border-white/5 hover:bg-white/5 hover:border-white/10"
+                    ? "bg-white/[0.03] border-white/10"
+                    : "bg-transparent border-white/[0.05] hover:bg-white/[0.02]"
                 }`}
               >
                 <div
-                  className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-sm font-medium border transition-all duration-300 ${
+                  className={`shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-sm font-semibold border transition-all duration-500 ${
                     activePillar === idx
-                      ? "bg-[#FFA16C]/10 border-[#FFA16C]/20 text-[#FFA16C]"
-                      : "bg-white/5 border-white/5 text-white/30 group-hover:border-white/10 group-hover:text-white/50"
+                      ? "bg-[#FFA16C]/10 border-[#FFA16C]/30 text-[#FFA16C]"
+                      : "bg-white/5 border-white/5 text-white/20 group-hover:text-white/40"
                   }`}
                 >
                   {pillar.number}
                 </div>
                 <div className="flex flex-col gap-1 flex-1 min-w-0">
-                  <h4
-                    className={`text-base md:text-lg font-medium transition-colors duration-300 ${
-                      activePillar === idx ? "text-white" : "text-white"
-                    }`}
-                  >
+                  <h4 className="text-lg md:text-xl font-medium text-white/90">
                     {pillar.title}
                   </h4>
-                  <p
-                    className={`text-sm md:text-[15px] font-light leading-normal tracking-[0.2px] transition-colors duration-300 ${
-                      activePillar === idx ? "text-[#707079]" : "text-[#707079]"
-                    }`}
-                  >
+                  <p className="text-[15px] font-light leading-relaxed text-[#707079]">
                     {pillar.description}
                   </p>
                 </div>
-                {activePillar === idx && (
-                  <div className="hidden md:block shrink-0 w-1 h-10 rounded-full bg-white/10 overflow-hidden">
-                    <motion.div
-                      key={activePillar}
-                      className="w-full bg-[#FFA16C] rounded-full origin-top"
-                      initial={{ scaleY: 0 }}
-                      animate={{ scaleY: 1 }}
-                      transition={{ duration: cycleDuration / 1000, ease: "linear" }}
-                      style={{ height: "100%", transformOrigin: "top" }}
-                    />
-                  </div>
-                )}
               </motion.div>
             ))}
           </div>
 
-          {/* Right Side Image (Desktop only) */}
-          <div className="hidden lg:flex lg:w-1/2 relative">
+          {/* Right Side Visual (Mobile: Bottom, Desktop: Right) */}
+          <div className="mt-8 lg:mt-0 flex lg:w-1/2 relative min-h-[300px] sm:min-h-[400px] px-2">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activePillar}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.4 }}
-                className="w-full h-full rounded-3xl overflow-hidden"
+                initial={{ opacity: 0, scale: 0.98, filter: "blur(10px)" }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, scale: 1.02, filter: "blur(10px)" }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full h-full rounded-2xl overflow-hidden relative group"
               >
+                {/* Background Noise/Texture */}
+                <div className="absolute inset-0 bg-black z-0" />
+                <div className="absolute inset-0 opacity-20 z-10" style={{ backgroundImage: "url('/images/noise.png')" }} />
+                
                 <img
                   src={pillars[activePillar].image}
                   alt={pillars[activePillar].title}
-                  className="w-full h-full object-cover rounded-2xl"
-                  style={{ minHeight: "420px" }}
+                  className="w-full h-full object-cover rounded-2xl relative z-20 grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000"
                 />
+                
+                {/* Visual Overlay like the screenshot sphere hint */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-30" />
               </motion.div>
             </AnimatePresence>
           </div>
