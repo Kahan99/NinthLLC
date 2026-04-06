@@ -19,6 +19,7 @@ interface ScrollRevealProps {
   textClassName?: string;
   rotationEnd?: string;
   wordAnimationEnd?: string;
+  scrub?: boolean | number;
 }
 
 const ScrollReveal: React.FC<ScrollRevealProps> = ({
@@ -31,7 +32,8 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   containerClassName = '',
   textClassName = '',
   rotationEnd = 'bottom bottom',
-  wordAnimationEnd = 'bottom bottom'
+  wordAnimationEnd = 'bottom bottom',
+  scrub = 1,
 }) => {
   const containerRef = useRef<HTMLHeadingElement>(null);
 
@@ -73,7 +75,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
             scroller,
             start: 'top bottom',
             end: rotationEnd,
-            scrub: true
+            scrub: scrub
           }
         }
       );
@@ -99,7 +101,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
             scroller,
             start: 'top bottom-=20%',
             end: wordAnimationEnd,
-            scrub: true
+            scrub: scrub
           }
         }
       );

@@ -3,6 +3,8 @@ import { Instrument_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import GlobalFilters from "@/components/layout/GlobalFilters";
+import Preloader from "@/components/layout/Preloader";
+import { LoadingProvider } from "@/context/LoadingContext";
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
@@ -17,6 +19,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ninth.llc"),
   title: "NINTH° | Design & Development Studio",
   description: "NINTH° builds high-performance digital products. AI-native software engineering, product design, and strategic consulting for ambitious teams.",
   keywords: ["Software Engineering", "Product Design", "AI-native", "Strategic Consulting", "Design", "Development", "Studio", "Software", "Digital Systems"],
@@ -47,11 +50,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${instrumentSans.variable} ${instrumentSerif.variable} font-sans h-full dark`}>
-      <body className="min-h-full flex flex-col bg-background text-foreground antialiased">
-        <GlobalFilters />
-        <Navbar />
-        {children}
+    <html lang="en" suppressHydrationWarning className={`${instrumentSans.variable} ${instrumentSerif.variable} font-sans h-full dark`}>
+      <body className="min-h-full flex flex-col bg-background text-foreground antialiased relative">
+        <LoadingProvider>
+          <Preloader />
+          <GlobalFilters />
+          <Navbar />
+          {children}
+        </LoadingProvider>
       </body>
     </html>
   );

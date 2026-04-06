@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Container from "@/components/layout/Container";
 import Section from "@/components/layout/Section";
@@ -33,7 +33,16 @@ const pillars = [
 ];
 
 export default function Values() {
-  const [activePillar, setActivePillar] = React.useState(0);
+  const [activePillar, setActivePillar] = useState(0);
+  const cycleDuration = 5000; // 5 seconds
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActivePillar((prev) => (prev + 1) % pillars.length);
+    }, cycleDuration);
+
+    return () => clearInterval(timer);
+  }, [activePillar]); // Reset timer on manual selection or automatic change
 
   return (
     <Section id="value" className="bg-black py-12 md:py-20 lg:py-24">
@@ -99,12 +108,13 @@ export default function Values() {
                 </div>
                 {activePillar === idx && (
                   <div className="hidden md:block shrink-0 w-1 h-10 rounded-full bg-white/10 overflow-hidden">
-                    <div
+                    <motion.div
+                      key={activePillar}
                       className="w-full bg-[#FFA16C] rounded-full origin-top"
-                      style={{
-                        height: "100%",
-                        animation: "progressFill 5000ms linear forwards",
-                      }}
+                      initial={{ scaleY: 0 }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: cycleDuration / 1000, ease: "linear" }}
+                      style={{ height: "100%", transformOrigin: "top" }}
                     />
                   </div>
                 )}
@@ -135,18 +145,6 @@ export default function Values() {
         </div>
       </Container>
 
-      <style>{`
-        @keyframes progressFill {
-          from {
-            transform: scaleY(0);
-            transform-origin: top;
-          }
-          to {
-            transform: scaleY(1);
-            transform-origin: top;
-          }
-        }
-      `}</style>
     </Section>
   );
 }

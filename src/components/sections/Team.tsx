@@ -34,7 +34,7 @@ export default function Team() {
     offset: ["start end", "end start"]
   });
 
-  const scaleValue = useTransform(scrollYProgress, [0.1, 0.4], [0.5, 0.35]);
+  const scaleValue = useTransform(scrollYProgress, [0.1, 0.4], [0.8, 0.45]);
   const opacityValue = useTransform(scrollYProgress, [0, 0.1, 0.4, 0.5], [0, 1, 1, 0]);
 
   return (
@@ -44,9 +44,9 @@ export default function Team() {
         {/* Header Label */}
         <motion.div 
           style={{ opacity: opacityValue }}
-          className="absolute top-8 sm:top-12 md:top-20 left-0 right-0 flex justify-center px-4"
+          className="absolute top-10 sm:top-12 md:top-20 left-0 right-0 flex justify-center px-4"
         >
-          <h2 id="teams-heading" className="text-[#FFA16C] text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-4xl 2xl:text-5xl font-bold tracking-tight text-center">
+          <h2 id="teams-heading" className="text-[#FFA16C] text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-center uppercase">
             THE TEAM
           </h2>
         </motion.div>
@@ -54,20 +54,21 @@ export default function Team() {
         {/* Central Graphic & Dynamic Headline */}
         <motion.div 
           style={{ scale: scaleValue, opacity: opacityValue }}
-          className="relative z-10 w-full px-3 sm:px-5 md:px-0 flex flex-col items-center will-change-transform"
+          className="relative z-10 w-full px-4 sm:px-5 md:px-0 flex flex-col items-center will-change-transform"
         >
           <img 
-            src="/images/thirty.webp" 
+            src="/team/thirty.webp" 
             alt="30" 
             width={800} 
             height={600} 
             loading="eager" 
-            className="w-full h-auto object-contain scale-100 md:scale-35 px-3 sm:px-5 md:px-0"
+            className="w-full h-auto object-contain scale-[1.1] sm:scale-100 md:scale-35"
           />
-          <p className="text-[#707079] text-base sm:text-lg md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light text-center mt-2 md:mt-0 whitespace-nowrap px-2 md:absolute md:bottom-[26%] md:left-1/2 md:-translate-x-1/2">
+          <p className="text-[#707079] text-sm sm:text-lg md:text-lg lg:text-xl xl:text-2xl font-light text-center mt-4 md:mt-0 whitespace-nowrap px-4 md:absolute md:bottom-[26%] md:left-1/2 md:-translate-x-1/2">
             <span className="text-white">A players</span>, assembled per engagement.
           </p>
         </motion.div>
+
 
         {/* Bottom Description Paragraph */}
         <motion.div 
@@ -75,9 +76,9 @@ export default function Team() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.2, delay: 0.3 }}
-          className="absolute bottom-2 sm:bottom-4 md:bottom-4 lg:bottom-6 xl:bottom-8 2xl:bottom-16 left-0 right-0 flex flex-col items-center justify-center px-4 sm:px-6 text-center z-0"
+          className="absolute bottom-6 sm:bottom-4 md:bottom-4 lg:bottom-6 xl:bottom-8 left-0 right-0 flex flex-col items-center justify-center px-6 sm:px-6 text-center z-0"
         >
-          <p className="text-[#707079] text-base sm:text-lg md:text-sm lg:text-base xl:text-xl 2xl:text-3xl font-light leading-[1.3] md:leading-[1.3] xl:leading-[1.24] 2xl:leading-[1.15] max-w-88 sm:max-w-2xl md:max-w-xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-5xl text-balance">
+          <p className="text-[#707079] text-sm sm:text-base md:text-sm lg:text-base xl:text-xl font-light leading-[1.4] md:leading-[1.3] max-w-sm sm:max-w-2xl md:max-w-xl lg:max-w-2xl xl:max-w-3xl text-balance">
             You are <span className="text-white font-medium">not hiring a generic agency roster.</span>
             {" "}You are engaging{" "}
             <span className="text-white font-medium">senior builders across design, engineering, architecture, QA, and delivery</span>
@@ -97,15 +98,15 @@ export default function Team() {
                 Founding Team
               </p>
             </div>
-            <h2 className="text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] font-medium leading-[1.2] tracking-[-0.2px] text-white fog-effect mb-4">
+            <h2 className="text-[25px] sm:text-[32px] md:text-[32px] lg:text-[40px] xl:text-[48px] font-medium leading-[1.2] tracking-[-0.2px] text-white fog-effect mb-4 px-4 sm:px-0">
               Founder led. <span className="text-[#FFA16C]">Senior by default.</span>
             </h2>
-            <p className="text-lg md:text-xl text-[#707079] max-w-2xl text-balance">
+            <p className="text-base sm:text-lg md:text-xl text-[#707079] max-w-2xl px-6 sm:px-0 text-balance">
               You work with decision makers, backed by a team built for precision delivery.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 xl:gap-8 auto-rows-fr">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8 auto-rows-fr px-6 sm:px-0">
             {principals.map((member, i) => (
               <motion.div
                 key={i}

@@ -30,7 +30,7 @@ export default function BrandPromise() {
           whileInView={{ opacity: 1, filter: "blur(0px)" }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="text-[32px] md:text-[56px] font-medium leading-[1.1] tracking-[-0.1px] text-white mb-6"
+          className="text-[28px] sm:text-[42px] md:text-[56px] font-medium leading-[1.1] tracking-[-0.1px] text-white mb-6 px-4"
           style={{
             filter: "drop-shadow(0 0 30px rgba(255,255,255,0.15))" // The "fog-effect" soft glow
           }}
@@ -44,7 +44,7 @@ export default function BrandPromise() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-[#707079] text-base md:text-lg max-w-[1000px] sm:max-w-[1100px] md:max-w-[1200px] lg:max-w-[1350px] xl:max-w-[1500px] leading-[1.3] mx-auto mb-10"
+          className="text-[#707079] text-sm sm:text-base md:text-lg max-w-[1000px] leading-[1.4] mx-auto mb-10 px-6 sm:px-0"
         >
           We build systems that stay composed under pressure, driven by architecture-first decisions and disciplined engineering.
           <br className="hidden md:inline" /> 
@@ -52,8 +52,8 @@ export default function BrandPromise() {
         </motion.div>
 
         {/* ── CUSTOM GLASS BUTTON ── */}
-        <div className="flex justify-center items-center">
-          <Link href="/contact">
+        <div className="flex justify-center items-center px-6">
+          <Link href="/contact" className="w-full sm:w-auto">
             <svg className="absolute w-0 h-0" aria-hidden="true">
               <defs>
                 <filter id="noiseFilter">
@@ -62,7 +62,7 @@ export default function BrandPromise() {
               </defs>
             </svg>
             <button 
-              className="group relative inline-flex items-center justify-center px-[46px] py-[14px] text-white font-semibold text-lg leading-none rounded-lg overflow-hidden transition-all duration-500"
+              className="group relative inline-flex items-center justify-center px-10 sm:px-[46px] py-[13px] text-white font-semibold text-base sm:text-lg leading-none rounded-lg overflow-hidden transition-all duration-500 w-full sm:w-auto"
               style={{
                 background: 'linear-gradient(182.51deg, rgba(255, 255, 255, 0.02) 27.09%, rgba(90, 90, 90, 0.02) 58.59%, rgba(0, 0, 0, 0.02) 92.75%)',
                 boxShadow: `
@@ -99,7 +99,7 @@ export default function BrandPromise() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className="max-w-[800px] mx-auto px-5 relative pb-20 pointer-events-none"
+        className="max-w-[800px] mx-auto px-4 sm:px-5 relative pb-10 sm:pb-20 pointer-events-none"
       >
         <div className="relative flex justify-center">
           {/* Base MacBook Body */}
@@ -116,7 +116,7 @@ export default function BrandPromise() {
             <img 
               src="/images/key-lights-on.svg" 
               alt="Keyboard backlight" 
-              className="w-full h-auto opacity-80"
+              className="w-full h-auto opacity-70 sm:opacity-80"
             />
           </div>
 
@@ -124,21 +124,21 @@ export default function BrandPromise() {
           <img 
             src="/images/image1.png" 
             alt="Screen light" 
-            className="absolute inset-0 w-full h-auto mix-blend-screen opacity-0 animate-pulse-slow" 
+            className="absolute inset-0 w-full h-auto mix-blend-screen opacity-0 animate-pulse-slow px-[10%]" 
             style={{ animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}
           />
 
           {/* Screen Content Overlay (Dynamic Digital Rain) */}
-          <div className="absolute top-[6%] left-[13%] w-[74%] h-[56%] overflow-hidden rounded-[4px] bg-black">
+          <div className="absolute top-[6%] left-[13.2%] w-[73.6%] h-[56.2%] overflow-hidden rounded-[2px] sm:rounded-[4px] bg-black">
             <LetterGlitch
               glitchColors={["#757575", "#3a3a3a", "#3d3d3d"]}
-              glitchSpeed={10}
+              glitchSpeed={12}
               centerVignette={false}
               outerVignette={false}
               smooth
             />
             {/* Overlay scanline effect or dimming */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           </div>
 
           {/* Bottom Reflection/Shadow */}

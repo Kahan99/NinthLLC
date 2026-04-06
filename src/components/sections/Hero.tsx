@@ -49,7 +49,7 @@ export default function Hero({ scrollProgress, isStatic = true }: HeroProps) {
         >
           {/* Main Heading with Accessibility Patterns */}
           <motion.div 
-            className="text-[2.75rem] leading-[1.1] tracking-tight sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] text-white font-medium"
+            className="text-[1.85rem] leading-[1.1] tracking-tight sm:text-[2.25rem] md:text-[3rem] lg:text-[4.5rem] text-white font-medium"
             variants={fadeInUp}
           >
             <span className="whitespace-pre-wrap inline-block sm:whitespace-nowrap" aria-label="Your Vision.">
@@ -57,15 +57,15 @@ export default function Hero({ scrollProgress, isStatic = true }: HeroProps) {
               <span className="block" aria-hidden="true">Your Vision.</span>
             </span>
             <br className="sm:hidden" />
-            <span className="whitespace-pre-wrap inline-block sm:whitespace-nowrap sm:ml-2" aria-label="Our Precision.">
+            <span className="whitespace-pre-wrap inline-block sm:whitespace-nowrap sm:ml-2.5" aria-label="Our Precision.">
               <span className="sr-only">Our Precision.</span>
               <span className="block" aria-hidden="true">Our Precision.</span>
             </span>
           </motion.div>
 
           {/* Description Paragraph */}
-          <motion.div className="max-w-2xl mx-auto mt-4" variants={fadeInUp}>
-            <p className="whitespace-pre-wrap text-[0.95rem] md:text-[1.5rem] text-[#707079] leading-[1.3]" aria-label="NINTH° builds software products and digital systems end to end, from first principles to production, for those who value discretion, clarity, and uncompromising execution.">
+          <motion.div className="max-w-2xl mx-auto mt-5 sm:mt-6" variants={fadeInUp}>
+            <p className="whitespace-pre-wrap text-[0.875rem] md:text-[1.25rem] text-[#707079] leading-[1.4] px-2 sm:px-0" aria-label="NINTH° builds software products and digital systems end to end, from first principles to production, for those who value discretion, clarity, and uncompromising execution.">
               <span className="sr-only">NINTH° builds software products and digital systems end to end, from first principles to production, for those who value discretion, clarity, and uncompromising execution.</span>
               <span className="block" aria-hidden="true">NINTH° builds software products and digital systems end to end, from first principles to production, for those who value discretion, clarity, and uncompromising execution.</span>
             </p>
@@ -73,13 +73,13 @@ export default function Hero({ scrollProgress, isStatic = true }: HeroProps) {
 
           {/* Hero Actions - Buttons aligned with Reference Snippet */}
           <motion.div 
-            className="flex flex-col items-center justify-center gap-4 px-8 sm:px-0 mt-10 sm:flex-row"
+            className="flex flex-col items-center justify-center gap-3.5 px-6 sm:px-0 mt-8 sm:mt-12 sm:flex-row"
             variants={fadeInUp}
           >
             {/* Request Call Button (Glass Variant) */}
             <Link href="/contact" className="w-full sm:w-auto">
               <button 
-                className="w-full sm:w-56 min-w-[120px] whitespace-nowrap inline-flex items-center justify-center px-8 py-[14px] text-white hover:text-black font-semibold text-lg leading-none rounded-lg transition-all duration-300 bg-white/5 hover:bg-white border border-white/10"
+                className="w-full sm:w-52 min-w-[120px] whitespace-nowrap inline-flex items-center justify-center px-8 py-[13px] text-white hover:text-black font-semibold text-base sm:text-lg leading-none rounded-lg transition-all duration-300 bg-white/5 hover:bg-white border border-white/10"
                 style={{ backdropFilter: "blur(10px)", boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 30px" }}
               >
                 Request Call
@@ -95,7 +95,7 @@ export default function Hero({ scrollProgress, isStatic = true }: HeroProps) {
                   </filter>
                 </defs>
               </svg>
-              <button className="group relative inline-flex items-center justify-center px-[46px] py-[14px] text-white font-semibold text-lg leading-none rounded-lg overflow-hidden transition-colors duration-300 w-full sm:w-56 min-w-[160px] whitespace-nowrap rounded-lg transition-transform duration-150 active:scale-95">
+              <button className="group relative inline-flex items-center justify-center px-8 sm:px-[40px] py-[13px] text-white font-semibold text-base sm:text-lg leading-none rounded-lg overflow-hidden transition-colors duration-300 w-full sm:w-52 min-w-[160px] whitespace-nowrap transition-transform duration-150 active:scale-95">
                 {/* Custom Gradient Border Mask */}
                 <span 
                   className="absolute inset-0 rounded-lg pointer-events-none" 

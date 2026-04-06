@@ -42,21 +42,21 @@ export default function Footer() {
       <Container>
         
         {/* SECTION: CLOCK (REFINED FOR EXACT PARITY) */}
-        <div className="flex flex-col items-center mb-16 select-none">
-          <div className="relative w-full max-w-[400px] aspect-square flex items-center justify-center">
+        <div className="flex flex-col items-center mb-10 sm:mb-16 select-none">
+          <div className="relative w-full max-w-[300px] sm:max-w-[400px] aspect-square flex items-center justify-center">
             
             {/* 1. Mount Surface Light (Moved from back to base) */}
             <div className="absolute inset-x-0 bottom-0 flex items-center justify-center translate-y-[10%] pointer-events-none">
               <img 
                 alt="" 
                 src="/images/surface-bottom_4x.webp" 
-                className="w-full h-auto opacity-100 scale-[2.2] brightness-125 select-none"
+                className="w-full h-auto opacity-100 scale-[2] sm:scale-[2.2] brightness-125 select-none"
                 loading="lazy"
               />
               {/* Reference Decorative Highlights (hAJHK) */}
-              <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 flex items-center gap-10 opacity-30">
-                <div className="w-[120px] h-px bg-linear-to-r from-transparent via-white to-transparent" />
-                <div className="w-[60px] h-px bg-linear-to-r from-transparent via-white/50 to-transparent" />
+              <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 flex items-center gap-6 sm:gap-10 opacity-30">
+                <div className="w-[80px] sm:w-[120px] h-px bg-linear-to-r from-transparent via-white to-transparent" />
+                <div className="w-[40px] sm:w-[60px] h-px bg-linear-to-r from-transparent via-white/50 to-transparent" />
               </div>
             </div>
 
@@ -118,7 +118,7 @@ export default function Footer() {
 
                 {/* DTW Label (Lower Half - Corrected Position) */}
                 <div className="absolute bottom-[28%] z-10 flex flex-col items-center gap-1 opacity-100">
-                  <span className="text-[9px] font-bold tracking-[0.3em] text-[#9DEDFF] drop-shadow-[0_0_8px_rgba(157,237,255,0.3)]">DTW</span>
+                  <span className="text-[7px] sm:text-[9px] font-bold tracking-[0.3em] text-[#9DEDFF] drop-shadow-[0_0_8px_rgba(157,237,255,0.3)]">DTW</span>
                 </div>
 
               </div>
@@ -126,25 +126,25 @@ export default function Footer() {
           </div>
 
           {/* MAIN PEDESTAL BASE (Tall darker stand matching reference) */}
-          <div className="relative w-full flex justify-center -mt-[120px] md:-mt-16 pointer-events-none z-[5]">
+          <div className="relative w-full flex justify-center -mt-16 sm:-mt-16 pointer-events-none z-[5]">
              <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/0 via-black to-black" />
             <img 
               alt="" 
               src="/images/surface-bottom_4x.webp" 
-              className="w-full max-w-4xl opacity-100 brightness-50 scale-x-150 scale-y-125" 
+              className="w-full max-w-4xl opacity-100 brightness-50 scale-x-[1.8] sm:scale-x-150 scale-y-125" 
               loading="lazy" 
             />
           </div>
         </div>
 
         {/* Footer Navigation & Copyright */}
-        <div className="relative z-10 mt-20 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 text-[#707079] text-[11px] tracking-tight">
-          <div className="flex items-center gap-6 order-last md:order-first opacity-60">
+        <div className="relative z-10 mt-12 sm:mt-20 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 text-[#707079] text-[10px] sm:text-[11px] tracking-tight">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 order-last md:order-first opacity-60">
             <div>© {currentYear}, Ninth Degree Group LLC</div>
             <a href="mailto:hello@ninth.llc" className="hover:text-white transition-colors">Contact</a>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 opacity-60">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 sm:gap-x-8 gap-y-3 opacity-60">
             <Link href="#services" className="hover:text-white transition-colors">Capabilities</Link>
             <Link href="#timeline" className="hover:text-white transition-colors">Method</Link>
             <Link href="#intelligence" className="hover:text-white transition-colors">Intelligence</Link>
