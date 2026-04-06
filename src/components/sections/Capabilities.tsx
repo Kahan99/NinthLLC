@@ -108,7 +108,7 @@ export default function Capabilities() {
 
           <div className="max-w-4xl px-4 sm:px-0">
             <h2 className="text-[26px] sm:text-[32px] md:text-[40px] font-medium leading-[1.1] tracking-[-0.2px] text-white fog-effect">
-              <span className="whitespace-pre-nowrap sm:whitespace-pre-wrap text-[#FFA16C] fog-effect block" aria-label="Software is the foundation.">
+              <span className="whitespace-pre-wrap text-[#FFA16C] fog-effect block" aria-label="Software is the foundation.">
                 <span className="sr-only">Software is the foundation.</span>
                 {["Software", " ", "is", " ", "the", " ", "foundation."].map((word, i) => (
                   <motion.span
@@ -124,7 +124,7 @@ export default function Capabilities() {
                   </motion.span>
                 ))}
               </span>
-              <span className="whitespace-pre-nowrap sm:whitespace-pre-wrap mt-1 block" aria-label="Everything else exists to make it exceptional.">
+              <span className="whitespace-pre-wrap mt-1 block" aria-label="Everything else exists to make it exceptional.">
                 <span className="sr-only">Everything else exists to make it exceptional.</span>
                 {["Everything", " ", "else", " ", "exists", " ", "to", " ", "make", " ", "it", " ", "exceptional."].map((word, i) => (
                   <motion.span
