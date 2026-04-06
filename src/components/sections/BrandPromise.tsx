@@ -120,12 +120,23 @@ export default function BrandPromise() {
             />
           </div>
 
-          {/* Screen Light Effect (Screen Blend Mode) */}
-          <img 
-            src="/images/image1.png" 
-            alt="Screen light" 
-            className="absolute inset-0 w-full h-auto mix-blend-screen opacity-0 animate-pulse-slow px-[10%]" 
-            style={{ animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}
+          {/* Screen Light Effect (CSS Glow fallback for missing asset) */}
+          <motion.div 
+            className="absolute inset-0 w-full h-auto pointer-events-none px-[10%]" 
+            style={{ 
+              aspectRatio: '760/410',
+              background: 'radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.4) 0%, rgba(100, 200, 255, 0.1) 40%, transparent 70%)',
+              mixBlendMode: 'screen',
+            }}
+            animate={{
+              opacity: [0.1, 0.4, 0.1],
+              scale: [0.98, 1.02, 0.98],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
 
           {/* Screen Content Overlay (Dynamic Digital Rain) */}
